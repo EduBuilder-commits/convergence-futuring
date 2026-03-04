@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { 
-  Sparkles, ChevronRight, Play, BarChart3, Users, Target, Layers, TrendingUp, Zap, Shield, Globe, BookOpen, ArrowRight, CheckCircle, Star, Brain, Scale, FileText
+  Sparkles, ChevronRight, Play, BarChart3, Users, Target, Layers, TrendingUp, Zap, Shield, Globe, BookOpen, ArrowRight, CheckCircle, Star, Brain, Scale, FileText, AlertTriangle, Clock, DollarSign, GraduationCap, Building2, Users2
 } from 'lucide-react'
 
 export default function LandingPage() {
@@ -31,6 +31,50 @@ export default function LandingPage() {
     { value: 'AI', label: 'Powered' }
   ]
 
+  const benefits = [
+    { icon: AlertTriangle, title: 'Detect hidden risks', desc: 'Identify operational risks before they reach the Board agenda' },
+    { icon: Clock, title: 'Accelerate consensus', desc: 'Move from 9 months to 90 minutes with data-backed modeling' },
+    { icon: DollarSign, title: 'Validate budget decisions', desc: 'Stress-test financial choices with probability forecasts' },
+    { icon: Scale, title: 'Audit equity impacts', desc: 'Instant analysis of SPED, ELL, and subgroup impacts' },
+    { icon: Layers, title: 'Test scenarios', desc: 'Validate strategy against 15+ plausible future scenarios' }
+  ]
+
+  const ecosystem = [
+    { icon: Building2, title: 'Superintendents & Cabinet', items: ['Strategic Planning', 'Succession', 'Consolidation'] },
+    { icon: Users2, title: 'Board Trustees', items: ['Policy Adoption', 'Budget Approval', 'Governance'] },
+    { icon: GraduationCap, title: 'University Faculty', items: ['EdD Courses', 'Case Studies', 'Dissertation Data'] },
+    { icon: FileText, title: 'Department Chairs', items: ['Resource Allocation', 'Vertical Alignment', 'Staffing'] },
+    { icon: Zap, title: 'EdTech Leaders', items: ['AI Policy', 'Infrastructure', 'Data Privacy'] },
+    { icon: Users, title: 'Principals & Site Leaders', items: ['Master Scheduling', 'Culture Building', 'Crisis Response'] }
+  ]
+
+  const methodology = [
+    {
+      title: 'IEDMA Analysis',
+      subtitle: 'Strategic Robustness Score',
+      desc: 'Measures the structural integrity of your decision against chaos. Synthesizes Futuring Rigor, Simulation Robustness, and Organizational Capacity. Calculates a "break point" for your strategy.',
+      icon: Brain
+    },
+    {
+      title: 'Futures Wheel',
+      subtitle: 'Consequence Mapping',
+      desc: 'Maps the invisible ripple effects of your decision across three orders of impact.',
+      icon: Zap
+    },
+    {
+      title: 'Cross-Impact Matrix',
+      subtitle: 'Systems Interconnectivity',
+      desc: 'Reveals how different system variables fight or fuel each other.',
+      icon: Layers
+    }
+  ]
+
+  const process = [
+    { phase: '01', title: 'Context Injection', desc: 'Input your challenge or upload district data to initialize the world model', example: 'Budget shortfall due to 5% enrollment decline' },
+    { phase: '02', title: 'Simulation Stress-Test', desc: 'AI generates multiple future scenarios to test strategy resilience', example: 'Union strike threat + new state mandate' },
+    { phase: '03', title: 'Strategic Pivot', desc: 'Refine plan based on feedback to maximize robustness (IEDMA)', example: 'Shift from cuts to revenue-generating programs' }
+  ]
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -48,8 +92,8 @@ export default function LandingPage() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Features</a>
               <a href="#how-it-works" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">How It Works</a>
+              <a href="#ecosystem" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Ecosystem</a>
               <a href="/faq" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">FAQ</a>
-              <a href="#pricing" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Pricing</a>
               <Link href="/login" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Sign In</Link>
               <Link href="/signup" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
                 Get Started
@@ -72,15 +116,15 @@ export default function LandingPage() {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              See the Future.{' '}
+              Predict the Future.{' '}
               <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Shape It.
+                Secure the District.
               </span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-              The advanced strategic foresight platform for education leaders. 
-              Simulate high-stakes decisions, map future consequences, and stress-test your strategy before execution.
+              Convergence isn't just a simulator—it's an operational radar system. 
+              Help educational leaders stress-test high-stakes decisions against chaos before it happens.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -111,16 +155,107 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Benefits */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-6">
+            {benefits.map((benefit, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all border border-gray-100">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center mb-4">
+                  <benefit.icon className="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{benefit.title}</h3>
+                <p className="text-gray-600">{benefit.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section id="how-it-works" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">The Protocol</h2>
+            <p className="text-gray-600">How It Works</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {process.map((step, i) => (
+              <div key={i} className="relative">
+                <div className="bg-white rounded-2xl p-6 border-2 border-gray-100 hover:border-purple-200 transition-colors h-full">
+                  <div className="text-4xl font-bold text-purple-600 mb-4">{step.phase}</div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-gray-600 mb-4">{step.desc}</p>
+                  <div className="bg-purple-50 rounded-lg p-3">
+                    <div className="text-xs text-purple-600 font-medium">Example:</div>
+                    <div className="text-sm text-purple-700">{step.example}</div>
+                  </div>
+                </div>
+                {i < 2 && (
+                  <ChevronRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 text-purple-300 h-6 w-6 z-10 bg-white" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Ecosystem */}
+      <section id="ecosystem" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">The Ecosystem</h2>
+            <p className="text-gray-600">Who Uses Convergence?</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {ecosystem.map((item, i) => (
+              <div key={i} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+                    <item.icon className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {item.items.map((item2, j) => (
+                    <span key={j} className="px-2 py-1 bg-gray-100 rounded text-xs text-gray-600">{item2}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Methodology */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">The Science Behind the Simulation</h2>
+            <p className="text-gray-600">Methodology</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {methodology.map((method, i) => (
+              <div key={i} className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-100">
+                <method.icon className="h-10 w-10 text-purple-600 mb-4" />
+                <h3 className="text-lg font-bold text-gray-900 mb-1">{method.title}</h3>
+                <p className="text-purple-600 text-sm font-medium mb-3">{method.subtitle}</p>
+                <p className="text-gray-600 text-sm">{method.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
       <section id="features" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Everything You Need for Strategic Futuring
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Powerful tools backed by AI to help education leaders make data-driven decisions
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Everything You Need for Strategic Futuring</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Powerful tools backed by AI to help education leaders make data-driven decisions</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -137,51 +272,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section id="how-it-works" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              The FBDM Process
-            </h2>
-            <p className="text-gray-600">
-              A proven framework for strategic foresight in education
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { phase: 'Phase 1', title: 'Identify', desc: 'Scan environment, identify trends, gather data', icon: Brain },
-              { phase: 'Phase 2', title: 'Analyze', desc: 'Cross-impact analysis, stakeholder mapping', icon: Layers },
-              { phase: 'Phase 3', title: 'Predict', desc: 'Monte Carlo simulations, scenario development', icon: BarChart3 },
-              { phase: 'Phase 4', title: 'Act', desc: 'Strategy selection, action planning, monitoring', icon: Target }
-            ].map((step, i) => (
-              <div key={i} className="relative">
-                <div className="bg-white rounded-2xl p-6 border-2 border-gray-100 hover:border-purple-200 transition-colors h-full">
-                  <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-4">
-                    {i + 1}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.desc}</p>
-                </div>
-                {i < 3 && (
-                  <ChevronRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 text-purple-300 h-6 w-6" />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-purple-600 to-blue-600">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Shape Your District's Future?
-          </h2>
-          <p className="text-purple-100 mb-8 text-lg">
-            Join education leaders using Convergence to make smarter, data-driven decisions.
-          </p>
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to Secure Your District's Future?</h2>
+          <p className="text-purple-100 mb-8 text-lg">Join education leaders using Convergence to make smarter, data-driven decisions.</p>
           <Link 
             href="/signup" 
             className="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all shadow-lg"
@@ -204,7 +299,7 @@ export default function LandingPage() {
             <div className="flex space-x-8 text-gray-400">
               <a href="#" className="hover:text-white transition-colors">Privacy</a>
               <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+              <a href="/faq" className="hover:text-white transition-colors">FAQ</a>
             </div>
           </div>
           <div className="mt-8 text-center text-gray-500 text-sm">

@@ -53,6 +53,11 @@ interface SimulationResult {
   confidence: number
   confidenceInterval: { lower: number; upper: number }
   riskScore: number
+  iedmaScore: number
+  breakPoint: string
+  futuringRigor: number
+  simulationRobustness: number
+  distributionQuality: number
   data: number[]
   iterations: number
   method: string
@@ -265,6 +270,26 @@ export default function SimulationPage() {
     const cv = (stdDev / mean) * 100
     const riskScore = Math.max(0, Math.min(100, 100 - cv + Math.abs(skewness) * 10))
     
+    // IEDMA Score Calculation
+    // I = Futuring Rigor (based on iterations and method)
+    const futuringRigor = Math.min(100, (iterations / 100) * 10 + (method === 'sobol' ? 20 : method === 'latin_hypercube' ? 15 : 10))
+    // E = Simulation Robustness (based on confidence and margin of error)
+    const marginOfErrorPercent = (marginOfError / mean) * 100
+    const simulationRobustness = Math.max(0, 100 - marginOfErrorPercent * 5)
+    // D = Distribution Quality (based on skewness and kurtosis)
+    const distributionQuality = Math.max(0, 100 - Math.abs(skewness) * 10 - Math.abs(kurtosis) * 5)
+    // M = Model Complexity (based on number of variables)
+    const modelComplexity = Math.min(100, variables.length * 15 + 40)
+    // A = Organizational Capacity (placeholder - would integrate with real data)
+    const organizationalCapacity = 75 // Default baseline
+    
+    const iedmaScore = Math.round((futuringRigor + simulationRobustness + distributionQuality + modelComplexity + organizationalCapacity) / 5)
+    
+    // Break point analysis
+    const p10Value = getPercentile(0.1)
+    const p90Value = getPercentile(0.9)
+    const breakPoint = p90Value > mean * 1.5 ? 'HIGH' : p90Value > mean * 1.2 ? 'MEDIUM' : 'LOW'
+    
     // Sensitivity analysis
     const sensitivity = calculateSensitivityAnalysis(data, variableSamples)
     
@@ -285,6 +310,11 @@ export default function SimulationPage() {
       confidence: confidenceLevel,
       confidenceInterval: { lower: mean - marginOfError, upper: mean + marginOfError },
       riskScore,
+      iedmaScore,
+      breakPoint,
+      futuringRigor,
+      simulationRobustness,
+      distributionQuality,
       data: sorted.slice(0, 100),
       iterations: n,
       method: method,
@@ -715,6 +745,66 @@ export default function SimulationPage() {
                   </div>
                   <div className="mt-2 text-xs text-white/50">
                     Based on coefficient of variation ({((result.stdDev/result.mean)*100).toFixed(1)}%) and distribution shape
+                  </div>
+                </div>
+
+                {/* IEDMA Score */}
+                <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 rounded-xl p-4 border border-purple-500/30">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <Brain className="h-5 w-5 text-purple-400" />
+                      <span className="font-semibold text-white">IEDMA Score</span>
+                    </div>
+                    <div className={`text-2xl font-bold ${
+                      (result as any).iedmaScore >= 80 ? 'text-green-400' :
+                      (result as any).iedmaScore >= 60 ? 'text-yellow-400' : 'text-red-400'
+                    }`}>
+                      {(result as any).iedmaScore}/100
+                    </div>
+                  </div>
+                  
+                  {/* IEDMA Breakdown */}
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/60">Futuring Rigor</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 h-2 bg-slate-700 rounded-full">
+                          <div className="h-full bg-purple-500" style={{ width: `${(result as any).futuringRigor}%` }} />
+                        </div>
+                        <span className="text-white w-8">{(result as any).futuringRigor?.toFixed(0)}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/60">Simulation Robustness</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 h-2 bg-slate-700 rounded-full">
+                          <div className="h-full bg-blue-500" style={{ width: `${(result as any).simulationRobustness}%` }} />
+                        </div>
+                        <span className="text-white w-8">{(result as any).simulationRobustness?.toFixed(0)}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/60">Distribution Quality</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 h-2 bg-slate-700 rounded-full">
+                          <div className="h-full bg-green-500" style={{ width: `${Math.max(0, 100 - Math.abs(result.skewness) * 10 - Math.abs(result.kurtosis) * 5)}%` }} />
+                        </div>
+                        <span className="text-white w-8">{Math.max(0, 100 - Math.abs(result.skewness) * 10 - Math.abs(result.kurtosis) * 5).toFixed(0)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Break Point */}
+                  <div className="mt-3 pt-3 border-t border-white/10">
+                    <div className="flex justify-between items-center">
+                      <span className="text-white/60">Strategy Break Point</span>
+                      <span className={`font-semibold ${
+                        (result as any).breakPoint === 'LOW' ? 'text-green-400' :
+                        (result as any).breakPoint === 'MEDIUM' ? 'text-yellow-400' : 'text-red-400'
+                      }`}>
+                        {(result as any).breakPoint} - {(result as any).breakPoint === 'LOW' ? 'Strategy holds under pressure' : (result as any).breakPoint === 'MEDIUM' ? 'Moderate fragility' : 'High risk of collapse'}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>
