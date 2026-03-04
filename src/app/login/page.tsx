@@ -6,10 +6,18 @@ import Link from 'next/link'
 import { createClient } from '@supabase/supabase-js'
 import { Sparkles, Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Safe client initialization
+const getSupabaseClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn('Supabase credentials not configured')
+    return null
+  }
+  
+  return createClient(supabaseUrl, supabaseKey)
+}
 
 export default function LoginPage() {
   const router = useRouter()
@@ -20,6 +28,13 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    const supabase = getSupabaseClient()
+    if (!supabase) {
+      setError('Supabase not configured. Please contact support.')
+      return
+    }
+    
     setLoading(true)
     setError('')
 
@@ -37,6 +52,12 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = async () => {
+    const supabase = getSupabaseClient()
+    if (!supabase) {
+      setError('Supabase not configured. Please contact support.')
+      return
+    }
+    
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {

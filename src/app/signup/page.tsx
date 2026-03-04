@@ -6,10 +6,17 @@ import Link from 'next/link'
 import { createClient } from '@supabase/supabase-js'
 import { Sparkles, Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
-)
+const getSupabaseClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn('Supabase credentials not configured')
+    return null
+  }
+  
+  return createClient(supabaseUrl, supabaseKey)
+}
 
 export default function SignupPage() {
   const router = useRouter()
@@ -21,6 +28,13 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    const supabase = getSupabaseClient()
+    if (!supabase) {
+      setError('Supabase not configured. Please contact support.')
+      return
+    }
+    
     setLoading(true)
     setError('')
 
@@ -38,21 +52,17 @@ export default function SignupPage() {
       setError(signUpError.message)
       setLoading(false)
     } else {
-      // Create profile
-      if (data.user) {
-        await supabase.from('profiles').insert({
-          id: data.user.id,
-          email,
-          full_name: fullName,
-          subscription_tier: 'free',
-          subscription_status: 'active'
-        })
-      }
       router.push('/dashboard')
     }
   }
 
   const handleGoogleSignup = async () => {
+    const supabase = getSupabaseClient()
+    if (!supabase) {
+      setError('Supabase not configured. Please contact support.')
+      return
+    }
+    
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -62,36 +72,38 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center gap-2 mb-4">
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-xl">
-              <Sparkles className="h-8 w-8 text-white" />
+          <Link href="/" className="inline-flex items-center justify-center gap-2 mb-6">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Sparkles className="h-7 w-7 text-white" />
             </div>
-            <span className="text-3xl font-bold text-white">Convergence</span>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Create your account</h1>
-          <p className="text-white/60">Start your futuring journey</p>
+            <span className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              Convergence
+            </span>
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
+          <p className="text-gray-500">Start your futuring journey</p>
         </div>
 
-        <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-          <form onSubmit={handleSignup} className="space-y-4">
+        <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+          <form onSubmit={handleSignup} className="space-y-5">
             {error && (
-              <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-1">Full Name</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-slate-900/50 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-purple-500"
+                  className="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="John Smith"
                   required
                 />
@@ -99,14 +111,14 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-1">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-900/50 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-purple-500"
+                  className="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="you@example.com"
                   required
                 />
@@ -114,14 +126,14 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-1">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-900/50 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-purple-500"
+                  className="w-full border border-gray-200 rounded-lg pl-10 pr-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="••••••••"
                   required
                   minLength={6}
@@ -132,7 +144,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 shadow-md"
             >
               {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Create Account'}
               <ArrowRight className="h-5 w-5" />
@@ -142,16 +154,16 @@ export default function SignupPage() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/10"></div>
+                <div className="w-full border-t border-gray-200"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-transparent text-white/40">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">Or continue with</span>
               </div>
             </div>
 
             <button
               onClick={handleGoogleSignup}
-              className="mt-4 w-full bg-white hover:bg-gray-100 text-slate-900 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
+              className="mt-4 w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -163,9 +175,8 @@ export default function SignupPage() {
             </button>
           </div>
 
-          <p className="mt-6 text-center text-white/60">
-            Already have an account?{' '}
-            <Link href="/login" className="text-purple-400 hover:text-purple-300">
+          <p className="mt-6 text-center text-gray-500">            Already have an account?{' '}
+            <Link href="/login" className="text-purple-600 hover:text-purple-700 font-medium">
               Sign in
             </Link>
           </p>
