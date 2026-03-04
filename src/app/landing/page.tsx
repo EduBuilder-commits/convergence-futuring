@@ -2,227 +2,213 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
 import { 
-  Sparkles, Users, TrendingUp, Shield, ChevronRight,
-  Brain, Target, Globe, BarChart3, Layers, Zap,
-  ArrowRight, CheckCircle, Star
+  Sparkles, ChevronRight, Play, BarChart3, Users, Target, Layers, TrendingUp, Zap, Shield, Globe, BookOpen, ArrowRight, CheckCircle, Star, Brain, Scale, FileText
 } from 'lucide-react'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
-)
-
 export default function LandingPage() {
-  const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) {
-        setUser(user)
-      }
-    })
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const features = [
-    {
-      icon: Brain,
-      title: 'FBDM Framework',
-      description: 'Guided 4-phase futuring: Identify, Analyze, Predict, Act'
-    },
-    {
-      icon: Layers,
-      title: 'Scenario Matrices',
-      description: 'Baseline, Transformation, Collapse, Constraint, Wildcard scenarios'
-    },
-    {
-      icon: Target,
-      title: 'Monte Carlo Simulations',
-      description: 'Run 10,000+ iterations for accurate probability forecasts'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Trend Analysis',
-      description: 'Historical data visualization with equity-focused projections'
-    },
-    {
-      icon: Users,
-      title: 'Stakeholder Analysis',
-      description: 'Power/Interest grids and impact assessments'
-    },
-    {
-      icon: Zap,
-      title: 'Cross-Impact Matrices',
-      description: 'Map forces and analyze mutual dependencies'
-    }
+    { icon: Brain, title: 'FBDM Framework', desc: 'Guided 4-phase futuring process' },
+    { icon: Layers, title: 'Scenario Matrices', desc: '5 scenario types with risk scoring' },
+    { icon: BarChart3, title: 'Monte Carlo', desc: '10K+ iterations with AI analysis' },
+    { icon: TrendingUp, title: 'Trend Analysis', desc: 'Historical data & equity focus' },
+    { icon: Users, title: 'Stakeholder Mapping', desc: 'Power/Interest grids' },
+    { icon: Scale, title: 'Equity Projections', desc: 'Gap analysis by subgroup' }
+  ]
+
+  const stats = [
+    { value: '10K+', label: 'Simulations' },
+    { value: '5', label: 'Scenario Types' },
+    { value: '8', label: 'Templates' },
+    { value: 'AI', label: 'Powered' }
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Header */}
-      <header className="border-b border-white/10 backdrop-blur-md bg-slate-900/50 sticky top-0 z-50">
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-2 rounded-lg">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-white">Convergence</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Convergence
+              </span>
             </div>
-            <div className="flex items-center space-x-4">
-              {user ? (
-                <Link href="/dashboard" className="text-white/80 hover:text-white">
-                  Dashboard
-                </Link>
-              ) : (
-                <>
-                  <Link href="/login" className="text-white/80 hover:text-white">
-                    Sign In
-                  </Link>
-                  <Link 
-                    href="/signup" 
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg font-medium"
-                  >
-                    Get Started
-                  </Link>
-                </>
-              )}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#features" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Features</a>
+              <a href="#how-it-works" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">How It Works</a>
+              <a href="#pricing" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Pricing</a>
+              <Link href="/login" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Sign In</Link>
+              <Link href="/signup" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+                Get Started
+              </Link>
             </div>
           </div>
         </div>
-      </header>
+      </nav>
 
-      {/* Hero */}
-      <main>
-        <section className="relative py-20 lg:py-32 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-sm mb-6">
-                <Star className="h-4 w-4" />
-                Strategic Futuring for Education Leaders
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                See the Future.{' '}
-                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Shape It.
-                </span>
-              </h1>
-              <p className="text-xl text-white/70 max-w-2xl mx-auto mb-8">
-                AI-powered strategic futuring platform with Monte Carlo simulations. 
-                Make data-driven decisions for your district with confidence.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link 
-                  href="/signup" 
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-2"
-                >
-                  Start Free Trial <ArrowRight className="h-5 w-5" />
-                </Link>
-                <Link 
-                  href="/demo" 
-                  className="border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10"
-                >
-                  Watch Demo
-                </Link>
-              </div>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50" />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-r from-purple-200/30 to-blue-200/30 rounded-full blur-3xl" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 text-sm font-medium mb-6">
+              <Star className="h-4 w-4" />
+              AI-Powered Strategic Futuring
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              See the Future.{' '}
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Shape It.
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+              The advanced strategic foresight platform for education leaders. 
+              Simulate high-stakes decisions, map future consequences, and stress-test your strategy before execution.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/signup" 
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
+              >
+                Begin Simulation <ArrowRight className="h-5 w-5" />
+              </Link>
+              <Link 
+                href="/demo" 
+                className="border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:border-purple-300 hover:bg-purple-50 transition-all flex items-center justify-center gap-2"
+              >
+                <Play className="h-5 w-5" /> View Demo
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="mt-16 grid grid-cols-4 gap-8 max-w-2xl mx-auto">
+              {stats.map((stat, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{stat.value}</div>
+                  <div className="text-gray-500 text-sm">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Features */}
-        <section className="py-20 bg-slate-900/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">
+      {/* Features */}
+      <section id="features" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Everything You Need for Strategic Futuring
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, i) => (
-                <div key={i} className="bg-slate-800/50 rounded-xl p-6 border border-white/10 hover:border-purple-500/30 transition-colors">
-                  <feature.icon className="h-10 w-10 text-purple-400 mb-4" />
-                  <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-white/60">{feature.description}</p>
-                </div>
-              ))}
-            </div>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Powerful tools backed by AI to help education leaders make data-driven decisions
+            </p>
           </div>
-        </section>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, i) => (
+              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all border border-gray-100 group">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <feature.icon className="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        {/* How It Works */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">
+      {/* How It Works */}
+      <section id="how-it-works" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               The FBDM Process
             </h2>
-            <div className="grid md:grid-cols-4 gap-6">
-              {[
-                { phase: 'Phase 1', title: 'Identify', desc: 'Scan environment, identify trends, gather data' },
-                { phase: 'Phase 2', title: 'Analyze', desc: 'Cross-impact analysis, stakeholder mapping' },
-                { phase: 'Phase 3', title: 'Predict', desc: 'Monte Carlo simulations, scenario development' },
-                { phase: 'Phase 4', title: 'Act', desc: 'Strategy selection, action planning, monitoring' }
-              ].map((step, i) => (
-                <div key={i} className="relative">
-                  <div className="bg-slate-800 rounded-xl p-6 border border-white/10 h-full">
-                    <div className="text-purple-400 text-sm font-medium mb-2">{step.phase}</div>
-                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                    <p className="text-white/60 text-sm">{step.desc}</p>
+            <p className="text-gray-600">
+              A proven framework for strategic foresight in education
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              { phase: 'Phase 1', title: 'Identify', desc: 'Scan environment, identify trends, gather data', icon: Brain },
+              { phase: 'Phase 2', title: 'Analyze', desc: 'Cross-impact analysis, stakeholder mapping', icon: Layers },
+              { phase: 'Phase 3', title: 'Predict', desc: 'Monte Carlo simulations, scenario development', icon: BarChart3 },
+              { phase: 'Phase 4', title: 'Act', desc: 'Strategy selection, action planning, monitoring', icon: Target }
+            ].map((step, i) => (
+              <div key={i} className="relative">
+                <div className="bg-white rounded-2xl p-6 border-2 border-gray-100 hover:border-purple-200 transition-colors h-full">
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold mb-4">
+                    {i + 1}
                   </div>
-                  {i < 3 && (
-                    <ChevronRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 text-purple-400 h-6 w-6" />
-                  )}
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-gray-600 text-sm">{step.desc}</p>
                 </div>
-              ))}
-            </div>
+                {i < 3 && (
+                  <ChevronRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 text-purple-300 h-6 w-6" />
+                )}
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Pricing Preview */}
-        <section className="py-20 bg-slate-900/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-white text-center mb-12">
-              Simple Pricing
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-slate-800 rounded-xl p-6 border border-white/10">
-                <h3 className="text-xl font-bold text-white">Free</h3>
-                <p className="text-3xl font-bold text-white mt-2">$0</p>
-                <ul className="mt-4 space-y-2 text-white/60">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> 3 Scenarios</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Basic Monte Carlo</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> 1 User</li>
-                </ul>
-              </div>
-              <div className="bg-gradient-to-b from-purple-500/20 to-slate-800 rounded-xl p-6 border-2 border-purple-500">
-                <h3 className="text-xl font-bold text-white">Pro</h3>
-                <p className="text-3xl font-bold text-white mt-2">$49<span className="text-lg font-normal">/mo</span></p>
-                <ul className="mt-4 space-y-2 text-white/60">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Unlimited Scenarios</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Advanced Monte Carlo</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Data Upload</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> 10 Team Members</li>
-                </ul>
-              </div>
-              <div className="bg-slate-800 rounded-xl p-6 border border-white/10">
-                <h3 className="text-xl font-bold text-white">Enterprise</h3>
-                <p className="text-3xl font-bold text-white mt-2">$199<span className="text-lg font-normal">/mo</span></p>
-                <ul className="mt-4 space-y-2 text-white/60">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Everything in Pro</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> API Access</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Custom Integration</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-400" /> Unlimited Team</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+      {/* CTA */}
+      <section className="py-20 bg-gradient-to-r from-purple-600 to-blue-600">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Ready to Shape Your District's Future?
+          </h2>
+          <p className="text-purple-100 mb-8 text-lg">
+            Join education leaders using Convergence to make smarter, data-driven decisions.
+          </p>
+          <Link 
+            href="/signup" 
+            className="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all shadow-lg"
+          >
+            Start Free Trial <ArrowRight className="h-5 w-5" />
+          </Link>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white/40">
-          <p>&copy; 2026 Convergence Strategic Futuring. All rights reserved.</p>
+      <footer className="bg-gray-900 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-white">Convergence</span>
+            </div>
+            <div className="flex space-x-8 text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
+            </div>
+          </div>
+          <div className="mt-8 text-center text-gray-500 text-sm">
+            © 2026 Convergence Strategic Futuring. All rights reserved.
+          </div>
         </div>
       </footer>
     </div>

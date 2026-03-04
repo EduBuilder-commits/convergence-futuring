@@ -1,1 +1,18 @@
-{}
+{
+  "/_not-found": "app/_not-found.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/api/analyze/route": "app/api/analyze/route.js",
+  "/cross-impact/page": "app/cross-impact/page.js",
+  "/data/page": "app/data/page.js",
+  "/landing/page": "app/landing/page.js",
+  "/future-wheel/page": "app/future-wheel/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/equity/page": "app/equity/page.js",
+  "/scenarios/page": "app/scenarios/page.js",
+  "/subscription/page": "app/subscription/page.js",
+  "/stakeholders/page": "app/stakeholders/page.js",
+  "/templates/page": "app/templates/page.js",
+  "/simulation/page": "app/simulation/page.js"
+}

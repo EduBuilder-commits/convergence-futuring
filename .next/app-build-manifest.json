@@ -1,3 +1,145 @@
 {
-  "pages": {}
+  "pages": {
+    "/_not-found": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/app/_not-found-3e3841f2a4777c26.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/css/dde164392de9a9fd.css",
+      "static/chunks/app/layout-b4f40affa5491bf0.js"
+    ],
+    "/dashboard/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/854-bdaf3f69a5afcd7f.js",
+      "static/chunks/app/dashboard/page-6582599d8f89aa40.js"
+    ],
+    "/cross-impact/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/app/cross-impact/page-2571c6a22c6ef009.js"
+    ],
+    "/data/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/148-c86450bdc4047cfe.js",
+      "static/chunks/796-2d4c7c26713813a2.js",
+      "static/chunks/773-7ca5a060bb1cd809.js",
+      "static/chunks/app/data/page-24e98d4d44bf7b42.js"
+    ],
+    "/landing/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/854-bdaf3f69a5afcd7f.js",
+      "static/chunks/app/landing/page-7e1ee72410e44290.js"
+    ],
+    "/future-wheel/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/app/future-wheel/page-0da322ad6db3998c.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/854-bdaf3f69a5afcd7f.js",
+      "static/chunks/app/login/page-4439a0381bdac7db.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/app/page-59e4dda6864aedf1.js"
+    ],
+    "/signup/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/854-bdaf3f69a5afcd7f.js",
+      "static/chunks/app/signup/page-3f87c8789f1fb8a5.js"
+    ],
+    "/equity/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/148-c86450bdc4047cfe.js",
+      "static/chunks/796-2d4c7c26713813a2.js",
+      "static/chunks/363-f12e0110e7a30ef0.js",
+      "static/chunks/app/equity/page-57d94a2accb05d44.js"
+    ],
+    "/scenarios/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/148-c86450bdc4047cfe.js",
+      "static/chunks/135-b093056131ba225e.js",
+      "static/chunks/app/scenarios/page-ae9f916651dfff35.js"
+    ],
+    "/subscription/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/app/subscription/page-777d934c4856ec6e.js"
+    ],
+    "/stakeholders/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/app/stakeholders/page-d0c53f0ea8c0a582.js"
+    ],
+    "/templates/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/app/templates/page-2e54fe2920345890.js"
+    ],
+    "/simulation/page": [
+      "static/chunks/webpack-aeb9771927246b3f.js",
+      "static/chunks/fd9d1056-e511be57ce16e717.js",
+      "static/chunks/69-d27f257676dcbc22.js",
+      "static/chunks/main-app-a694759cbc73d6de.js",
+      "static/chunks/881-7fb615041eabd0a2.js",
+      "static/chunks/148-c86450bdc4047cfe.js",
+      "static/chunks/796-2d4c7c26713813a2.js",
+      "static/chunks/773-7ca5a060bb1cd809.js",
+      "static/chunks/363-f12e0110e7a30ef0.js",
+      "static/chunks/app/simulation/page-79cbb76b3da1e499.js"
+    ]
+  }
 }
