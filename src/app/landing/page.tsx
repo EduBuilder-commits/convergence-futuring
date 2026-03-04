@@ -48,6 +48,7 @@ export default function LandingPage() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Features</a>
               <a href="#how-it-works" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">How It Works</a>
+              <a href="/faq" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">FAQ</a>
               <a href="#pricing" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Pricing</a>
               <Link href="/login" className="text-gray-600 hover:text-purple-600 font-medium transition-colors">Sign In</Link>
               <Link href="/signup" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
