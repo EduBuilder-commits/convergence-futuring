@@ -1,0 +1,6 @@
+{
+  "name": "convergence-futuring",
+  "private": false,
+  "description": "AI-powered strategic futuring platform with Monte Carlo simulations",
+  "auto_init": true
+}

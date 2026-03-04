@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { 
-  Sparkles, Plus, Settings, LogOut, FolderOpen,
-  Brain, Target, Layers, TrendingUp, Users, Zap,
-  ChevronRight, BarChart3, FileText, Upload, Loader2
+  Sparkles, Plus, LogOut, FolderOpen,
+  Brain, Target, Layers, TrendingUp, Zap,
+  ChevronRight, BarChart3, Upload, Loader2, Scale, FileCheck
 } from 'lucide-react'
 
 const supabase = createClient(
@@ -37,15 +37,6 @@ export default function DashboardPage() {
         return
       }
       setUser(user)
-
-      const { data } = await supabase
-        .from('projects')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('updated_at', { ascending: false })
-        .limit(10)
-      
-      if (data) setProjects(data)
       setLoading(false)
     }
 
@@ -74,7 +65,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-900">
-      {/* Header */}
       <header className="bg-slate-800 border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
@@ -95,13 +85,11 @@ export default function DashboardPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Welcome */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white">Welcome back</h1>
           <p className="text-white/60">{user?.email}</p>
         </div>
 
-        {/* Quick Actions */}
         <div className="grid md:grid-cols-4 gap-4 mb-8">
           <Link href="/projects/new" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white p-6 rounded-xl flex items-center space-x-3">
             <Plus className="h-6 w-6" />
@@ -122,21 +110,54 @@ export default function DashboardPage() {
           <Link href="/data" className="bg-slate-800 hover:bg-slate-700 text-white p-6 rounded-xl flex items-center space-x-3 border border-slate-700">
             <Upload className="h-6 w-6 text-blue-400" />
             <div className="text-left">
-              <div className="font-semibold">Upload Data</div>
-              <div className="text-sm text-slate-400">District data</div>
+              <div className="font-semibold">Data & Trends</div>
+              <div className="text-sm text-slate-400">Historical analysis</div>
             </div>
           </Link>
-          
-          <Link href="/subscription" className="bg-slate-800 hover:bg-slate-700 text-white p-6 rounded-xl flex items-center space-x-3 border border-slate-700">
-            <FileText className="h-6 w-6 text-yellow-400" />
+
+          <Link href="/equity" className="bg-slate-800 hover:bg-slate-700 text-white p-6 rounded-xl flex items-center space-x-3 border border-slate-700">
+            <Scale className="h-6 w-6 text-pink-400" />
             <div className="text-left">
-              <div className="font-semibold">Reports</div>
-              <div className="text-sm text-slate-400">Export analysis</div>
+              <div className="font-semibold">Equity</div>
+              <div className="text-sm text-slate-400">Gap projections</div>
             </div>
           </Link>
         </div>
 
-        {/* FBDM Process */}
+        <div className="grid md:grid-cols-4 gap-4 mb-8">
+          <Link href="/templates" className="bg-slate-800 hover:bg-slate-700 text-white p-4 rounded-xl flex items-center space-x-3 border border-slate-700">
+            <FileCheck className="h-5 w-5 text-purple-400" />
+            <div className="text-left">
+              <div className="font-medium">Templates</div>
+              <div className="text-xs text-slate-400">Forecasting</div>
+            </div>
+          </Link>
+          
+          <Link href="/scenarios" className="bg-slate-800 hover:bg-slate-700 text-white p-4 rounded-xl flex items-center space-x-3 border border-slate-700">
+            <Layers className="h-5 w-5 text-yellow-400" />
+            <div className="text-left">
+              <div className="font-medium">Scenarios</div>
+              <div className="text-xs text-slate-400">Risk matrices</div>
+            </div>
+          </Link>
+          
+          <Link href="/future-wheel" className="bg-slate-800 hover:bg-slate-700 text-white p-4 rounded-xl flex items-center space-x-3 border border-slate-700">
+            <Zap className="h-5 w-5 text-orange-400" />
+            <div className="text-left">
+              <div className="font-medium">Future Wheel</div>
+              <div className="text-xs text-slate-400">Impact mapping</div>
+            </div>
+          </Link>
+          
+          <Link href="/stakeholders" className="bg-slate-800 hover:bg-slate-700 text-white p-4 rounded-xl flex items-center space-x-3 border border-slate-700">
+            <Brain className="h-5 w-5 text-cyan-400" />
+            <div className="text-left">
+              <div className="font-medium">Stakeholders</div>
+              <div className="text-xs text-slate-400">Power/Interest</div>
+            </div>
+          </Link>
+        </div>
+
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-white mb-4">FBDM Framework</h2>
           <div className="grid md:grid-cols-4 gap-4">
@@ -156,7 +177,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Recent Projects */}
         <div className="bg-slate-800 rounded-xl border border-slate-700">
           <div className="p-4 border-b border-slate-700 flex justify-between items-center">
             <h2 className="text-lg font-semibold text-white">Recent Projects</h2>
@@ -165,37 +185,14 @@ export default function DashboardPage() {
             </Link>
           </div>
           
-          {projects.length === 0 ? (
-            <div className="p-12 text-center">
-              <FolderOpen className="h-12 w-12 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">No projects yet</h3>
-              <p className="text-slate-400 mb-4">Start your first strategic futuring project</p>
-              <Link href="/projects/new" className="inline-flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
-                <Plus className="h-4 w-4" /> Create Project
-              </Link>
-            </div>
-          ) : (
-            <div className="divide-y divide-slate-700">
-              {projects.map((project) => (
-                <Link 
-                  key={project.id} 
-                  href={`/projects/${project.id}`}
-                  className="p-4 flex items-center justify-between hover:bg-slate-700/50"
-                >
-                  <div>
-                    <h3 className="font-medium text-white">{project.name}</h3>
-                    <p className="text-sm text-slate-400">{project.description || 'No description'}</p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300 capitalize">
-                      {project.phase}
-                    </span>
-                    <ChevronRight className="h-4 w-4 text-slate-500" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          <div className="p-12 text-center">
+            <FolderOpen className="h-12 w-12 text-slate-600 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-white mb-2">No projects yet</h3>
+            <p className="text-slate-400 mb-4">Start your first strategic futuring project</p>
+            <Link href="/projects/new" className="inline-flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
+              <Plus className="h-4 w-4" /> Create Project
+            </Link>
+          </div>
         </div>
       </main>
     </div>
